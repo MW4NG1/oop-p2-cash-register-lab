@@ -3,14 +3,32 @@
 class CashRegister:
     def __init__(self, discount=0):
         """
-        Initializes the CashRegister with optional discount percentage.
-        Sets default values for total, items list, and transaction history.
+        Initializes the CashRegister. The discount attribute uses a setter 
+        property to handle validation automatically upon creation.
         """
         self.discount = discount
         self.total = 0
         self.items = []
         # Keeps track of each added transaction: (total_price_added, quantity_added)
         self.previous_transactions = []
+
+    @property
+    def discount(self):
+        """Getter for discount."""
+        return self._discount
+
+    @discount.setter
+    def discount(self, value):
+        """
+        Setter for discount. Validates that the discount is an integer 
+        and between 0 and 100 inclusive.
+        """
+        if isinstance(value, int) and 0 <= value <= 100:
+            self._discount = value
+        else:
+            print("Not valid discount")
+            # Default to 0 if an invalid value is provided
+            self._discount = 0
 
     def add_item(self, item, price, quantity=1):
         """
